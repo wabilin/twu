@@ -1,9 +1,12 @@
 {
   "manifest_version": 2,
+
   "name": "Tenhou Is 0w0 U",
   "version": "0.1.0",
-
   "description": "Unoffical add-on for Tenhou games subscription. Please play it at https://tenhou.net/0/wg/",
+
+  "author": "wabilin",
+  "homepage_url": "https://github.com/wabilin/twu",
 
   "icons": {
     "48": "icons/border-48.png"
@@ -11,7 +14,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://tenhou.net/0/wg/*"],
+      "matches": ["*://tenhou.net/0/wg/"],
       "js": ["0w0.js"]
     }
   ],
