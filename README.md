@@ -23,3 +23,4 @@ Unoffical add-on for Tenhou games subscription. Please play it at https://tenhou
 - [ ] Better Icons
 - [ ] Subscription sharing
 - [ ] Support for Chrome
+- [ ] 日本語 & English
