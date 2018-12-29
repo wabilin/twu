@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Tenhou 0w0 u",
+  "version": "0.0.1",
+
+  "description": "Unoffical add-on for Tenfou subscription",
+
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://tenhou.net/0/wg/*"],
+      "js": ["0w0.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+
+  "permissions": ["storage", "notifications"],
+  "applications": {
+    "gecko": {
+      "id": "tenhou-0w0-u@wabilin.github.io",
+      "strict_min_version": "57.0a1"
+    }
+  }
+}
