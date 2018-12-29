@@ -1,4 +1,5 @@
 let idUrlMap = {};
+let messageQueue = [];
 
 function onNotifyClicked(notificationId) {
   const url = idUrlMap[notificationId];
@@ -16,6 +17,10 @@ function onNotifyClickedClosed(notificationId) {
   }
 }
 
+function addToQueue(message) {
+  messageQueue.push(message)
+}
+
 function notify(message) {
   // TODO: i18n
   // var title = browser.i18n.getMessage("notificationTitle");
@@ -23,8 +28,8 @@ function notify(message) {
 
   const { url, playerName, danDetail } = message;
 
-  var title = `天鳳 0w0 ${playerName} 開戰!`;
-  var content = `快來觀看 ${playerName} (${danDetail}) 在天鳳的對戰`;
+  const title = `天鳳 0w0 ${playerName} 開戰!`;
+  const content = `快來觀看 ${playerName} (${danDetail}) 在天鳳的對戰`;
 
   browser.notifications.create({
     "type": "basic",
@@ -36,6 +41,18 @@ function notify(message) {
   })
 }
 
-browser.runtime.onMessage.addListener(notify);
+// handle queue per 3 secs, avoid all notifications pop-up in a sec
+function lookQueue() {
+  if (messageQueue.length !== 0) {
+    const message = messageQueue.shift()
+    notify(message)
+  }
+
+  setTimeout(lookQueue, 3000)
+}
+
+browser.runtime.onMessage.addListener(addToQueue);
 browser.notifications.onClicked.addListener(onNotifyClicked);
 browser.notifications.onClosed.addListener(onNotifyClickedClosed)
+
+lookQueue()

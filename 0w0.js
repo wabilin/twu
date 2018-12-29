@@ -1,19 +1,6 @@
-const DANS = [
-  // 0    1      2     3     4     5     6      7    8      9
- 	"新人","９級","８級","７級","６級","５級","４級","３級","２級","１級",
-  // 10    11    12    13    14    15    16     17   18     19
-	"初段","二段","三段","四段","五段","六段","七段","八段","九段","十段",
-  // 20
-	"天鳳位"
-];
+const TWO_HOURS = 2 * 60 * 60 * 1000;
 
-const TWO_HOURS = 2 * 60 * 60 * 1000
-
-// const subscriptionList = browser.storage.sync.get(subscriptionList)
-// const subscriptedNames = browser.storage.sync.get(subscriptedNames)
-const subscriptedNames = ['ドクロちゃん', '夜桜システム', '豚の王']
-
-let notifiedUrls = new Set()
+let notifiedUrls = new Set();
 
 function notifyExtension(battle) {
   const { url } = battle
@@ -29,6 +16,7 @@ function notifyExtension(battle) {
   browser.runtime.sendMessage(battle);
 };
 
+// Parse <div class='b'> in http://tenhou.net/0/wg/
 function parseBDiv(div) {
   const [danDiv, a] = div.children;
   const danStr = danDiv.className.replace('dan', '')
@@ -43,16 +31,29 @@ function parseBDiv(div) {
 function run() {
   const bDivs = document.querySelectorAll(".b");
   const battles = [...bDivs].map(parseBDiv);
-  console.log(battles)
 
-  battles.forEach(battle => {
-    const { playerName } = battle
+  browser.storage.sync.get(['subscriptedNames', 'subscriptedDan'])
+  .then((res) => {
+    const namesJson = res.subscriptedNames
+    const subscriptedNames = namesJson ? JSON.parse(namesJson) : [];
 
-    if (subscriptedNames.includes(playerName)) {
-      console.log('Sent:')
-      console.log(battle)
-      notifyExtension(battle)
+    let { subscriptedDan } = res
+    if (subscriptedDan && typeof(subscriptedDan) === 'string') {
+      if (subscriptedDan === 'x') {
+        subscriptedDan = undefined
+      } else {
+        subscriptedDan = parseInt(subscriptedDan, 10)
+      }
     }
+
+    battles.forEach(battle => {
+      const { playerName, dan } = battle
+
+      if (subscriptedNames.includes(playerName) ||
+          (subscriptedDan && dan >= subscriptedDan)) {
+        notifyExtension(battle)
+      }
+    })
   })
 }
 

@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Tenhou 0w0 u",
-  "version": "0.0.1",
+  "name": "Tenhou Is 0w0 U",
+  "version": "0.1.0",
 
-  "description": "Unoffical add-on for Tenfou subscription",
+  "description": "Unoffical add-on for Tenhou games subscription. Could use it at https://tenhou.net/0/wg/",
 
   "icons": {
     "48": "icons/border-48.png"

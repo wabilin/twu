@@ -7,10 +7,23 @@
 
   <body>
     <form>
-      <label>Subscription List</label>
-      <input type="text" id="colour"/>
-      <button type="submit">Save</button>
-    </form>
+      <label>訂閱名單</label>
+
+      <table id="subscripted-names-table">
+        <thead>
+          <tr>
+            <th>玩家名稱</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="subscripted-names-table-body">
+        </tbody>
+      </table>
+      <input id="new-player-name-input" type="text"/>
+      <button id="new-player-name-btn">新增玩家</button>
+      <br>
+      <label>訂閱一定段位以上的所有玩家</label>
+      <select id="dan-select">
+      </select>
     <script src="options.js"></script>
   </body>
 </html>
