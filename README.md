@@ -12,7 +12,7 @@ Unoffical add-on for Tenhou games subscription. Please play it at https://tenhou
 
 ## TODO List
 
-- [] Refactor
-- [] Better Icons
-- [] Subscription sharing
-- [] Support for Chrome
+- [ ] Refactor
+- [ ] Better Icons
+- [ ] Subscription sharing
+- [ ] Support for Chrome
