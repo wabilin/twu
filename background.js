@@ -1,5 +1,5 @@
-let idUrlMap = {};
-let messageQueue = [];
+const idUrlMap = {};
+const messageQueue = [];
 
 function onNotifyClicked(notificationId) {
   const url = idUrlMap[notificationId];
@@ -18,7 +18,7 @@ function onNotifyClickedClosed(notificationId) {
 }
 
 function addToQueue(message) {
-  messageQueue.push(message)
+  messageQueue.push(message);
 }
 
 function notify(message) {
@@ -32,27 +32,27 @@ function notify(message) {
   const content = `快來觀看 ${playerName} (${danDetail}) 在天鳳的對戰`;
 
   browser.notifications.create({
-    "type": "basic",
-    "iconUrl": browser.extension.getURL("icons/link-48.png"),
-    "title": title,
-    "message": content
-  }).then(notificationId => {
-    idUrlMap[notificationId] = url
-  })
+    type: 'basic',
+    iconUrl: browser.extension.getURL('icons/link-48.png'),
+    title,
+    message: content,
+  }).then((notificationId) => {
+    idUrlMap[notificationId] = url;
+  });
 }
 
 // handle queue per 3 secs, avoid all notifications pop-up in a sec
 function lookQueue() {
   if (messageQueue.length !== 0) {
-    const message = messageQueue.shift()
-    notify(message)
+    const message = messageQueue.shift();
+    notify(message);
   }
 
-  setTimeout(lookQueue, 3000)
+  setTimeout(lookQueue, 3000);
 }
 
 browser.runtime.onMessage.addListener(addToQueue);
 browser.notifications.onClicked.addListener(onNotifyClicked);
-browser.notifications.onClosed.addListener(onNotifyClickedClosed)
+browser.notifications.onClosed.addListener(onNotifyClickedClosed);
 
-lookQueue()
+lookQueue();
